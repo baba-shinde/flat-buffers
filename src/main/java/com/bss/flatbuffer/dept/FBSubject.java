@@ -3,16 +3,19 @@
 package com.bss.flatbuffer.dept;
 
 public final class FBSubject {
-  private FBSubject() { }
-  public static final byte English = 0;
-  public static final byte History = 1;
-  public static final byte Geology = 2;
-  public static final byte Maths = 3;
-  public static final byte Chemistry = 4;
-  public static final byte Geometry = 5;
+	private FBSubject() {
+	}
 
-  public static final String[] names = { "English", "History", "Geology", "Maths", "Chemistry", "Geometry", };
+	public static final byte English = 0;
+	public static final byte History = 1;
+	public static final byte Geology = 2;
+	public static final byte Maths = 3;
+	public static final byte Chemistry = 4;
+	public static final byte Geometry = 5;
 
-  public static String name(int e) { return names[e]; }
+	public static final String[] names = { "English", "History", "Geology", "Maths", "Chemistry", "Geometry", };
+
+	public static String name(int e) {
+		return names[e];
+	}
 }
-

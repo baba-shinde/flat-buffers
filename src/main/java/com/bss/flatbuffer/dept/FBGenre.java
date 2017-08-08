@@ -3,13 +3,16 @@
 package com.bss.flatbuffer.dept;
 
 public final class FBGenre {
-  private FBGenre() { }
-  public static final byte Educational = 0;
-  public static final byte Romantic = 1;
-  public static final byte Thriller = 2;
+	private FBGenre() {
+	}
 
-  public static final String[] names = { "Educational", "Romantic", "Thriller", };
+	public static final byte Educational = 0;
+	public static final byte Romantic = 1;
+	public static final byte Thriller = 2;
 
-  public static String name(int e) { return names[e]; }
+	public static final String[] names = { "Educational", "Romantic", "Thriller", };
+
+	public static String name(int e) {
+		return names[e];
+	}
 }
-

@@ -1,11 +1,14 @@
 package com.bss.flatbuffer.dept.transformer;
 
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bss.flatbuffer.dept.FBBook;
 import com.bss.flatbuffer.dept.FBDepartment;
 import com.bss.flatbuffer.dept.FBGenre;
 import com.bss.flatbuffer.dept.FBStudent;
+import com.bss.flatbuffer.dept.FBSubject;
 import com.bss.flatbuffer.dept.business.dto.Book;
 import com.bss.flatbuffer.dept.business.dto.Department;
 import com.bss.flatbuffer.dept.business.dto.Genre;
@@ -49,9 +52,71 @@ public class DepartmentTransformer implements Transformer<Department> {
 	}
 
 	@Override
-	public Department deserialize(byte[] stream) {
-		//WIP
-		return null;
+	public Department deserialize(final byte[] stream) {
+		Department department = null;
+		if (stream != null) {
+			department = new Department();
+			ByteBuffer buffer = ByteBuffer.wrap(stream);
+			FBDepartment rootAsDept = FBDepartment.getRootAsFBDepartment(buffer);
+
+			department.setDepartmentId(rootAsDept.departmentId());
+			department.setDepartmentName(rootAsDept.departmentName());
+			department.setDepartmentTag(rootAsDept.departmentTag());
+
+			List<Book> books = getBooksFromRoot(rootAsDept);
+			department.setBooks(books);
+
+			List<Student> students = getStudentsFromRoot(rootAsDept);
+			department.setStudents(students);
+		}
+
+		return department;
+	}
+
+	private List<Book> getBooksFromRoot(final FBDepartment rootAsDept) {
+		List<Book> books = null;
+		if (rootAsDept != null) {
+			int noOfBooks = rootAsDept.booksLength();
+			if (noOfBooks > 0) {
+				books = new ArrayList<>();
+				for (int i = 0; i < noOfBooks; i++) {
+					Book book = new Book();
+					FBBook fbBook = rootAsDept.books(i);
+					book.setAuthorDesc(fbBook.authorDesc());
+					book.setAuthorId(fbBook.authorId());
+					book.setBookId(fbBook.bookId());
+					String genreName = FBGenre.name(fbBook.genre());
+					book.setGenre(Genre.valueOf(genreName));
+
+					books.add(book);
+				}
+			}
+		}
+
+		return books;
+	}
+
+	private List<Student> getStudentsFromRoot(final FBDepartment rootAsDept) {
+		List<Student> students = null;
+		if (rootAsDept != null) {
+			int noOfStudents = rootAsDept.studentsLength();
+			if (noOfStudents > 0) {
+				students = new ArrayList<>();
+				for (int i = 0; i < noOfStudents; i++) {
+					Student student = new Student();
+					FBStudent fbStudent = rootAsDept.students(i);
+					student.setAddress(fbStudent.address());
+					student.setStudentId(fbStudent.studentId());
+					student.setStudentName(fbStudent.studentName());
+					String favSubject = FBSubject.name(fbStudent.favSubject());
+					student.setFavSubject(Subject.valueOf(favSubject));
+
+					students.add(student);
+				}
+			}
+		}
+
+		return students;
 	}
 
 	private int[] getVectorForBooks(final List<Book> books, final FlatBufferBuilder builder) {
@@ -113,11 +178,11 @@ public class DepartmentTransformer implements Transformer<Department> {
 				if (favSubject != null) {
 					byte fsub = 0;
 					if (favSubject.equals(Subject.Chemistry)) {
-						fsub = FBGenre.Educational;
+						fsub = FBSubject.Chemistry;
 					} else if (favSubject.equals(Subject.English)) {
-						fsub = FBGenre.Romantic;
+						fsub = FBSubject.English;
 					} else if (favSubject.equals(Subject.Maths)) {
-						fsub = FBGenre.Thriller;
+						fsub = FBSubject.Maths;
 					}
 					FBStudent.addFavSubject(builder, fsub);
 				}
@@ -126,7 +191,6 @@ public class DepartmentTransformer implements Transformer<Department> {
 
 				studentVector[i++] = offset;
 			}
-			;
 		}
 
 		return studentVector;
