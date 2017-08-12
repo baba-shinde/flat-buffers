@@ -2,6 +2,11 @@ package com.bss.flatbuffer.dept.business.dto;
 
 import java.util.List;
 
+/**
+ * 
+ * @author baba
+ *
+ */
 public class Department {
 	private String departmentName;
 	private String departmentTag;

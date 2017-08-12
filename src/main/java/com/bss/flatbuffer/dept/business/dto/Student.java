@@ -1,5 +1,10 @@
 package com.bss.flatbuffer.dept.business.dto;
 
+/**
+ * 
+ * @author baba
+ *
+ */
 public class Student {
 	private Integer studentId;
 	private String studentName;

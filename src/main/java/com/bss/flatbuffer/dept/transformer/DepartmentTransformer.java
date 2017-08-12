@@ -16,6 +16,11 @@ import com.bss.flatbuffer.dept.business.dto.Student;
 import com.bss.flatbuffer.dept.business.dto.Subject;
 import com.google.flatbuffers.FlatBufferBuilder;
 
+/**
+ * 
+ * @author baba
+ *
+ */
 public class DepartmentTransformer implements Transformer<Department> {
 
 	@Override
