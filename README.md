@@ -10,7 +10,8 @@
 * Ease of use
 
 ### How to use it
-This is not very different than Google's [Protobuf](https://github.com/google/protobuf). Following steps to be followed;
+This is not very different than Google's [Protobuf](https://github.com/google/protobuf)[There is separate Github repository for Google Protobuff, can be found [here](https://github.com/baba-shinde/protobuf). 
+Following steps to be followed;
  * Schema Creation, compilation
 Flatbuffer schema to be populated from bottom to top. The sample schema is mentioned below;
 
@@ -62,6 +63,8 @@ Protobuff is yet another decent tool for serialization and deserialization.  Thi
 **`One need to be extra careful about sequence of data getting streamed in byte buffer (during serialization).`**
 
 ### Java MicroBenchmark Test Harness (JMH) Details
+**Note: Benchmark test are carried out on developer box, I will soon be publishing the results of PROD grade boxes.**
+
 1. Flatbuffer Serialization
 
 ```
@@ -186,3 +189,6 @@ Run complete. Total time: 00:00:43
 Benchmark                                                 Mode  Cnt        Score   Error  Units
 ProtoBufferBenchmarkDeSerializationTest.deSerialization  thrpt    2  1265835.152          ops/s
 ```
+
+### Best cases in which FLatbuffer can be used
+Looking at Benchmark results it is clear that 
